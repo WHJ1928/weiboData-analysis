@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.whj.dataanalysis.mapper.BlogMapper" >
+  <resultMap id="BaseResultMap" type="com.whj.dataanalysis.dao.Blog" >
+    <id column="blog_id" property="blogId" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="likes_num" property="likesNum" jdbcType="VARCHAR" />
+    <result column="comment_num" property="commentNum" jdbcType="VARCHAR" />
+    <result column="forward_num" property="forwardNum" jdbcType="VARCHAR" />
+    <result column="original_flag" property="originalFlag" jdbcType="VARCHAR" />
+    <result column="created_time" property="createdTime" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.whj.dataanalysis.dao.BlogWithBLOBs" extends="BaseResultMap" >
+    <result column="blog_add" property="blogAdd" jdbcType="LONGVARCHAR" />
+    <result column="text" property="text" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    blog_id, user_id, likes_num, comment_num, forward_num, original_flag, created_time
+  </sql>
+  <sql id="Blob_Column_List" >
+    blog_add, text
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.whj.dataanalysis.dao.BlogExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from blog
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.whj.dataanalysis.dao.BlogExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from blog
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from blog
+    where blog_id = #{blogId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from blog
+    where blog_id = #{blogId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.whj.dataanalysis.dao.BlogExample" >
+    delete from blog
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.whj.dataanalysis.dao.BlogWithBLOBs" >
+    insert into blog (blog_id, user_id, likes_num, 
+      comment_num, forward_num, original_flag, 
+      created_time, blog_add, text
+      )
+    values (#{blogId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{likesNum,jdbcType=VARCHAR}, 
+      #{commentNum,jdbcType=VARCHAR}, #{forwardNum,jdbcType=VARCHAR}, #{originalFlag,jdbcType=VARCHAR}, 
+      #{createdTime,jdbcType=VARCHAR}, #{blogAdd,jdbcType=LONGVARCHAR}, #{text,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.whj.dataanalysis.dao.BlogWithBLOBs" >
+    insert into blog
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="blogId != null" >
+        blog_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="likesNum != null" >
+        likes_num,
+      </if>
+      <if test="commentNum != null" >
+        comment_num,
+      </if>
+      <if test="forwardNum != null" >
+        forward_num,
+      </if>
+      <if test="originalFlag != null" >
+        original_flag,
+      </if>
+      <if test="createdTime != null" >
+        created_time,
+      </if>
+      <if test="blogAdd != null" >
+        blog_add,
+      </if>
+      <if test="text != null" >
+        text,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="blogId != null" >
+        #{blogId,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="likesNum != null" >
+        #{likesNum,jdbcType=VARCHAR},
+      </if>
+      <if test="commentNum != null" >
+        #{commentNum,jdbcType=VARCHAR},
+      </if>
+      <if test="forwardNum != null" >
+        #{forwardNum,jdbcType=VARCHAR},
+      </if>
+      <if test="originalFlag != null" >
+        #{originalFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="createdTime != null" >
+        #{createdTime,jdbcType=VARCHAR},
+      </if>
+      <if test="blogAdd != null" >
+        #{blogAdd,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="text != null" >
+        #{text,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.whj.dataanalysis.dao.BlogExample" resultType="java.lang.Integer" >
+    select count(*) from blog
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update blog
+    <set >
+      <if test="record.blogId != null" >
+        blog_id = #{record.blogId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.likesNum != null" >
+        likes_num = #{record.likesNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.commentNum != null" >
+        comment_num = #{record.commentNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.forwardNum != null" >
+        forward_num = #{record.forwardNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.originalFlag != null" >
+        original_flag = #{record.originalFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createdTime != null" >
+        created_time = #{record.createdTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.blogAdd != null" >
+        blog_add = #{record.blogAdd,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.text != null" >
+        text = #{record.text,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update blog
+    set blog_id = #{record.blogId,jdbcType=VARCHAR},
+      user_id = #{record.userId,jdbcType=VARCHAR},
+      likes_num = #{record.likesNum,jdbcType=VARCHAR},
+      comment_num = #{record.commentNum,jdbcType=VARCHAR},
+      forward_num = #{record.forwardNum,jdbcType=VARCHAR},
+      original_flag = #{record.originalFlag,jdbcType=VARCHAR},
+      created_time = #{record.createdTime,jdbcType=VARCHAR},
+      blog_add = #{record.blogAdd,jdbcType=LONGVARCHAR},
+      text = #{record.text,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update blog
+    set blog_id = #{record.blogId,jdbcType=VARCHAR},
+      user_id = #{record.userId,jdbcType=VARCHAR},
+      likes_num = #{record.likesNum,jdbcType=VARCHAR},
+      comment_num = #{record.commentNum,jdbcType=VARCHAR},
+      forward_num = #{record.forwardNum,jdbcType=VARCHAR},
+      original_flag = #{record.originalFlag,jdbcType=VARCHAR},
+      created_time = #{record.createdTime,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.whj.dataanalysis.dao.BlogWithBLOBs" >
+    update blog
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="likesNum != null" >
+        likes_num = #{likesNum,jdbcType=VARCHAR},
+      </if>
+      <if test="commentNum != null" >
+        comment_num = #{commentNum,jdbcType=VARCHAR},
+      </if>
+      <if test="forwardNum != null" >
+        forward_num = #{forwardNum,jdbcType=VARCHAR},
+      </if>
+      <if test="originalFlag != null" >
+        original_flag = #{originalFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="createdTime != null" >
+        created_time = #{createdTime,jdbcType=VARCHAR},
+      </if>
+      <if test="blogAdd != null" >
+        blog_add = #{blogAdd,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="text != null" >
+        text = #{text,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where blog_id = #{blogId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.whj.dataanalysis.dao.BlogWithBLOBs" >
+    update blog
+    set user_id = #{userId,jdbcType=VARCHAR},
+      likes_num = #{likesNum,jdbcType=VARCHAR},
+      comment_num = #{commentNum,jdbcType=VARCHAR},
+      forward_num = #{forwardNum,jdbcType=VARCHAR},
+      original_flag = #{originalFlag,jdbcType=VARCHAR},
+      created_time = #{createdTime,jdbcType=VARCHAR},
+      blog_add = #{blogAdd,jdbcType=LONGVARCHAR},
+      text = #{text,jdbcType=LONGVARCHAR}
+    where blog_id = #{blogId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.whj.dataanalysis.dao.Blog" >
+    update blog
+    set user_id = #{userId,jdbcType=VARCHAR},
+      likes_num = #{likesNum,jdbcType=VARCHAR},
+      comment_num = #{commentNum,jdbcType=VARCHAR},
+      forward_num = #{forwardNum,jdbcType=VARCHAR},
+      original_flag = #{originalFlag,jdbcType=VARCHAR},
+      created_time = #{createdTime,jdbcType=VARCHAR}
+    where blog_id = #{blogId,jdbcType=VARCHAR}
+  </update>
+    <!-- 批量插入 -->
+    <insert id="batchSave" parameterType="java.util.List">
+        insert into blog (blog_id, user_id, blog_add,
+        likes_num, comment_num, forward_num,
+        original_flag, created_time, text)
+        values
+        <foreach collection="saveList" index="index" item="c" separator=",">
+            (#{c.blogId,jdbcType=VARCHAR}, #{c.userId,jdbcType=VARCHAR}, #{c.blogAdd,jdbcType=LONGVARCHAR},
+            #{c.likesNum,jdbcType=VARCHAR}, #{c.commentNum,jdbcType=VARCHAR}, #{c.forwardNum,jdbcType=VARCHAR},
+            #{c.originalFlag,jdbcType=VARCHAR}, #{c.createdTime,jdbcType=VARCHAR}, #{c.text,jdbcType=LONGVARCHAR}
+            )
+        </foreach>
+    </insert>
+</mapper>
