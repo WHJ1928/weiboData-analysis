@@ -34,17 +34,24 @@ public class FollowApi {
      * @throws JSONException
      */
     public JSONArray getFollowList(String userId)throws IOException, JSONException{
-        String url = "https://m.weibo.cn/api/container/getIndex?containerid=231051_-_followers_-_"+userId;
-        JSONArray cardGroup = null;
-        JSONObject jsonObject = getRequest(url);
-        JSONObject data = jsonObject.getJSONObject("data");
-        JSONArray cards = data.getJSONArray("cards");
-        for (int i = 0; i < cards.length(); i++){
-            JSONObject card = cards.getJSONObject(i);
-            if (!ObjectUtils.isEmpty(card.getString("itemid"))){
-                cardGroup = card.getJSONArray("card_group");
+        int page = 1;
+        JSONArray cardGroup = new JSONArray();
+        do {
+//            String url = "https://m.weibo.cn/api/container/getIndex?containerid=231051_-_followers_-_"+userId;
+            String url = "https://m.weibo.cn/api/container/getSecond?containerid=100505"+userId+"_-_FOLLOWERS&page="+page;
+            JSONObject jsonObject = getRequest(url);
+            String ok = jsonObject.get("ok").toString();
+            if (!ok.equals("1")){
+                break;
             }
-        }
+            JSONObject data = jsonObject.getJSONObject("data");
+            JSONArray cards = data.getJSONArray("cards");
+            for (int i = 0; i < cards.length(); i++){
+                JSONObject card = cards.getJSONObject(i);
+                cardGroup.put(card);
+            }
+            page ++;
+        }while (true);
         return cardGroup;
     }
 

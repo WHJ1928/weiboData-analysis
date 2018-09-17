@@ -13,6 +13,8 @@ public class FollowList {
 
     private String followUserFol;
 
+    private String mutualFans;
+
     public String getId() {
         return id;
     }
@@ -59,5 +61,13 @@ public class FollowList {
 
     public void setFollowUserFol(String followUserFol) {
         this.followUserFol = followUserFol == null ? null : followUserFol.trim();
+    }
+
+    public String getMutualFans() {
+        return mutualFans;
+    }
+
+    public void setMutualFans(String mutualFans) {
+        this.mutualFans = mutualFans == null ? null : mutualFans.trim();
     }
 }

@@ -51,11 +51,17 @@ public class FollowService {
                         followList.setFollowUsername(userInfo.getString("screen_name"));
                         followList.setFollowUserFans(userInfo.get("followers_count").toString());
                         followList.setFollowUserFol(userInfo.get("follow_count").toString());
+                        if (userInfo.get("follow_me").toString().equals("false")){
+                            followList.setMutualFans("0");
+                        }else {
+                            followList.setMutualFans("1");
+                        }
                         followLists.add(followList);
                     }
-                    System.out.println("用户"+userId);
                     listMapper.batchSaveFollowList(followLists);
                 }
+                Thread.sleep(3000);
+                System.out.println("用户暂停" + "用户:" + userId);
             }
         }catch (Exception e){
             e.printStackTrace();

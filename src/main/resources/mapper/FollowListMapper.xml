@@ -8,6 +8,7 @@
     <result column="follow_username" property="followUsername" jdbcType="VARCHAR" />
     <result column="follow_user_fans" property="followUserFans" jdbcType="VARCHAR" />
     <result column="follow_user_fol" property="followUserFol" jdbcType="VARCHAR" />
+    <result column="mutual_fans" property="mutualFans" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -68,7 +69,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, user_id, follow_user_id, follow_username, follow_user_fans, follow_user_fol
+    id, user_id, follow_user_id, follow_username, follow_user_fans, follow_user_fol, 
+    mutual_fans
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.whj.dataanalysis.dao.FollowListExample" >
     select
@@ -102,11 +104,11 @@
   </delete>
   <insert id="insert" parameterType="com.whj.dataanalysis.dao.FollowList" >
     insert into follow_list (id, user_id, follow_user_id, 
-      follow_username, follow_user_fans, follow_user_fol
-      )
+      follow_username, follow_user_fans, follow_user_fol, 
+      mutual_fans)
     values (#{id,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{followUserId,jdbcType=VARCHAR}, 
-      #{followUsername,jdbcType=VARCHAR}, #{followUserFans,jdbcType=VARCHAR}, #{followUserFol,jdbcType=VARCHAR}
-      )
+      #{followUsername,jdbcType=VARCHAR}, #{followUserFans,jdbcType=VARCHAR}, #{followUserFol,jdbcType=VARCHAR}, 
+      #{mutualFans,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.whj.dataanalysis.dao.FollowList" >
     insert into follow_list
@@ -129,6 +131,9 @@
       <if test="followUserFol != null" >
         follow_user_fol,
       </if>
+      <if test="mutualFans != null" >
+        mutual_fans,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -148,6 +153,9 @@
       </if>
       <if test="followUserFol != null" >
         #{followUserFol,jdbcType=VARCHAR},
+      </if>
+      <if test="mutualFans != null" >
+        #{mutualFans,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -178,6 +186,9 @@
       <if test="record.followUserFol != null" >
         follow_user_fol = #{record.followUserFol,jdbcType=VARCHAR},
       </if>
+      <if test="record.mutualFans != null" >
+        mutual_fans = #{record.mutualFans,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -190,7 +201,8 @@
       follow_user_id = #{record.followUserId,jdbcType=VARCHAR},
       follow_username = #{record.followUsername,jdbcType=VARCHAR},
       follow_user_fans = #{record.followUserFans,jdbcType=VARCHAR},
-      follow_user_fol = #{record.followUserFol,jdbcType=VARCHAR}
+      follow_user_fol = #{record.followUserFol,jdbcType=VARCHAR},
+      mutual_fans = #{record.mutualFans,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -213,6 +225,9 @@
       <if test="followUserFol != null" >
         follow_user_fol = #{followUserFol,jdbcType=VARCHAR},
       </if>
+      <if test="mutualFans != null" >
+        mutual_fans = #{mutualFans,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
@@ -222,18 +237,20 @@
       follow_user_id = #{followUserId,jdbcType=VARCHAR},
       follow_username = #{followUsername,jdbcType=VARCHAR},
       follow_user_fans = #{followUserFans,jdbcType=VARCHAR},
-      follow_user_fol = #{followUserFol,jdbcType=VARCHAR}
+      follow_user_fol = #{followUserFol,jdbcType=VARCHAR},
+      mutual_fans = #{mutualFans,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
     <!-- 批量插入 -->
     <insert id="batchSaveFollowList" parameterType="java.util.List">
         insert into follow_list (id, user_id, follow_user_id,
-        follow_username, follow_user_fans, follow_user_fol
-        )
+        follow_username, follow_user_fans, follow_user_fol,
+        mutual_fans)
         values
         <foreach collection="saveList" index="index" item="c" separator=",">
             (#{c.id,jdbcType=VARCHAR}, #{c.userId,jdbcType=VARCHAR}, #{c.followUserId,jdbcType=VARCHAR},
-            #{c.followUsername,jdbcType=VARCHAR}, #{c.followUserFans,jdbcType=VARCHAR}, #{c.followUserFol,jdbcType=VARCHAR}
+            #{c.followUsername,jdbcType=VARCHAR}, #{c.followUserFans,jdbcType=VARCHAR},
+            #{c.followUserFol,jdbcType=VARCHAR},#{c.mutualFans,jdbcType=VARCHAR}
             )
         </foreach>
     </insert>
