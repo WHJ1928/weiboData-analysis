@@ -60,6 +60,8 @@ public class FollowApi {
         //添加代理
         System.getProperties().setProperty("http.proxyHost", "122.241.72.191");
         System.getProperties().setProperty("http.proxyPort", "808");
+//        System.getProperties().setProperty("http.proxyHost", "125.94.0.251");
+//        System.getProperties().setProperty("http.proxyPort", "8080");
         URL realUrl = new URL(url);
         URLConnection conn = realUrl.openConnection();
         conn.setRequestProperty("accept", "*/*");
@@ -70,8 +72,14 @@ public class FollowApi {
         InputStream inputStream = conn.getInputStream();
         try {
             BufferedReader rd = new BufferedReader(new InputStreamReader(inputStream, Charset.forName("UTF-8")));
-            String jsonText = weiboApi.readAll(rd);
-            JSONObject json = new JSONObject(jsonText);
+//            String jsonText = weiboApi.readAll(rd);
+            StringBuffer sb = new StringBuffer();
+            String line = null;
+            //读取数据
+            while((line= rd.readLine())!=null){
+                sb.append(line);
+            }
+            JSONObject json = new JSONObject(sb.toString());
             return json;
         }finally {
             inputStream.close();

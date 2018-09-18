@@ -241,17 +241,16 @@
       mutual_fans = #{mutualFans,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
-    <!-- 批量插入 -->
-    <insert id="batchSaveFollowList" parameterType="java.util.List">
-        insert into follow_list (id, user_id, follow_user_id,
-        follow_username, follow_user_fans, follow_user_fol,
-        mutual_fans)
-        values
-        <foreach collection="saveList" index="index" item="c" separator=",">
-            (#{c.id,jdbcType=VARCHAR}, #{c.userId,jdbcType=VARCHAR}, #{c.followUserId,jdbcType=VARCHAR},
-            #{c.followUsername,jdbcType=VARCHAR}, #{c.followUserFans,jdbcType=VARCHAR},
-            #{c.followUserFol,jdbcType=VARCHAR},#{c.mutualFans,jdbcType=VARCHAR}
-            )
-        </foreach>
-    </insert>
+  <!-- 批量插入 -->
+  <insert id="batchSaveFollowList" parameterType="java.util.List">
+      insert into follow_list (id, user_id, follow_user_id,
+      follow_username, follow_user_fans, follow_user_fol,
+      mutual_fans)
+      values
+      <foreach collection="saveList" index="index" item="c" separator=",">
+        (#{c.id,jdbcType=VARCHAR}, #{c.userId,jdbcType=VARCHAR}, #{c.followUserId,jdbcType=VARCHAR},
+        #{c.followUsername,jdbcType=VARCHAR}, #{c.followUserFans,jdbcType=VARCHAR}, #{c.followUserFol,jdbcType=VARCHAR},
+        #{c.mutualFans,jdbcType=VARCHAR})
+      </foreach>
+  </insert>
 </mapper>

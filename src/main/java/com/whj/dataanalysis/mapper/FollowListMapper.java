@@ -36,5 +36,5 @@ public interface FollowListMapper {
      * @param saveList
      * @return
      */
-    int batchSaveFollowList(@Param("saveList") List<FollowList> saveList);
+    void batchSaveFollowList(@Param("saveList") List<FollowList> saveList);
 }
