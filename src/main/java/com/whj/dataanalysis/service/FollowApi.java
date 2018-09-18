@@ -33,7 +33,7 @@ public class FollowApi {
      * @throws IOException
      * @throws JSONException
      */
-    public JSONArray getFollowList(String userId)throws IOException, JSONException{
+    public JSONArray getFollowList(String userId)throws IOException, JSONException,InterruptedException{
         int page = 1;
         JSONArray cardGroup = new JSONArray();
         do {
@@ -51,6 +51,7 @@ public class FollowApi {
                 cardGroup.put(card);
             }
             page ++;
+            Thread.sleep(50);
         }while (true);
         return cardGroup;
     }

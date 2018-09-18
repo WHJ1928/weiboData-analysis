@@ -61,7 +61,7 @@ public class FollowService {
                     }
                     listMapper.batchSaveFollowList(followLists);
                 }
-                Thread.sleep(2000);
+//                Thread.sleep(2500);
                 System.out.println("用户暂停" + "用户:" + userId);
             }
         }catch (Exception e){
