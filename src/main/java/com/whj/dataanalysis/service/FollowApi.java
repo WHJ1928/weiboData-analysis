@@ -14,6 +14,8 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.Charset;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * @author wanghaijun
@@ -51,7 +53,8 @@ public class FollowApi {
                 cardGroup.put(card);
             }
             page ++;
-            Thread.sleep(50);
+            int s = ThreadLocalRandom.current().nextInt(900);
+            Thread.sleep(s);
         }while (true);
         return cardGroup;
     }
