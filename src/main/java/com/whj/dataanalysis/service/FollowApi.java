@@ -53,8 +53,8 @@ public class FollowApi {
                 cardGroup.put(card);
             }
             page ++;
-            int s = ThreadLocalRandom.current().nextInt(900);
-            Thread.sleep(s);
+//            int s = ThreadLocalRandom.current().nextInt(900);
+//            Thread.sleep(s);
         }while (true);
         return cardGroup;
     }
